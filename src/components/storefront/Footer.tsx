@@ -17,27 +17,27 @@ export function Footer({ locale }: { locale: Locale }) {
           <h3 className="mb-3 text-sm font-bold uppercase text-gray-500">{dict.footer.legal}</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href={`/${locale}/legal/privacy`} className="hover:text-blue-600">
+              <Link href={`/${locale}/legal/privacy`} className="hover:text-brand">
                 {dict.footer.privacy}
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/legal/returns`} className="hover:text-blue-600">
+              <Link href={`/${locale}/legal/returns`} className="hover:text-brand">
                 {dict.footer.returns}
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/legal/shipping`} className="hover:text-blue-600">
+              <Link href={`/${locale}/legal/shipping`} className="hover:text-brand">
                 {dict.footer.shipping}
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/legal/terms`} className="hover:text-blue-600">
+              <Link href={`/${locale}/legal/terms`} className="hover:text-brand">
                 {dict.footer.terms}
               </Link>
             </li>
             <li>
-              <Link href={`/${locale}/shipping-uae`} className="hover:text-blue-600">
+              <Link href={`/${locale}/shipping-uae`} className="hover:text-brand">
                 {dict.footer.shippingUae}
               </Link>
             </li>

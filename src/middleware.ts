@@ -18,5 +18,8 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|admin|_next|favicon.ico|robots.txt|sitemap.xml|images).*)"],
+  // Skip API/admin routes, Next internals, and any request for a static file
+  // (anything with a file extension, e.g. /logo.png, /favicon.ico) — only
+  // actual pages need a locale prefix.
+  matcher: ["/((?!api|admin|_next|.*\\..*).*)"],
 };

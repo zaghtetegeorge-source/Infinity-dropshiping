@@ -83,7 +83,7 @@ export function CartPageClient({ locale }: { locale: Locale }) {
               {item.image ? <Image src={item.image} alt={item.titleEn} fill className="object-cover" /> : null}
             </div>
             <div className="flex-1">
-              <Link href={`/${locale}/products/${item.slug}`} className="font-medium hover:text-blue-600">
+              <Link href={`/${locale}/products/${item.slug}`} className="font-medium hover:text-brand">
                 {locale === "ar" ? item.titleAr : item.titleEn}
               </Link>
               <div className="mt-1 text-sm text-gray-500">{formatPrice(item.unitPriceAed, currency, locale)}</div>

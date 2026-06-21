@@ -256,7 +256,7 @@ export function ProductForm({
       <section className="rounded-xl border bg-white p-5">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-bold">Images</h2>
-          <button type="button" onClick={addImage} className="text-sm font-medium text-blue-600 hover:underline">
+          <button type="button" onClick={addImage} className="text-sm font-medium text-brand hover:underline">
             + Add image
           </button>
         </div>
@@ -286,7 +286,7 @@ export function ProductForm({
       <section className="rounded-xl border bg-white p-5">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-bold">Variants</h2>
-          <button type="button" onClick={addVariant} className="text-sm font-medium text-blue-600 hover:underline">
+          <button type="button" onClick={addVariant} className="text-sm font-medium text-brand hover:underline">
             + Add variant
           </button>
         </div>

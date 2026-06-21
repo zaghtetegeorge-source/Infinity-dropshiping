@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ShoppingCart, MessageCircle, User } from "lucide-react";
 import type { Locale } from "@/lib/i18n/dictionaries";
@@ -19,15 +20,16 @@ export function Header({ locale }: { locale: Locale }) {
   return (
     <header className="sticky top-0 z-40 border-b bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link href={`/${locale}`} className="text-xl font-bold tracking-tight">
-          {siteConfig.name}
+        <Link href={`/${locale}`} className="flex items-center gap-2">
+          <Image src="/logo.png" alt={siteConfig.name} width={36} height={36} className="h-9 w-9 object-contain" />
+          <span className="text-xl font-bold tracking-tight">{siteConfig.name}</span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium sm:flex">
-          <Link href={`/${locale}`} className="hover:text-blue-600">
+          <Link href={`/${locale}`} className="hover:text-brand">
             {dict.nav.home}
           </Link>
-          <Link href={`/${locale}/products`} className="hover:text-blue-600">
+          <Link href={`/${locale}/products`} className="hover:text-brand">
             {dict.nav.shop}
           </Link>
         </nav>
@@ -77,7 +79,7 @@ export function Header({ locale }: { locale: Locale }) {
           <Link href={`/${locale}/cart`} className="relative">
             <ShoppingCart className="h-6 w-6" />
             {count > 0 ? (
-              <span className="absolute -top-2 -end-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-[11px] font-bold text-white">
+              <span className="absolute -top-2 -end-2 flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">
                 {count}
               </span>
             ) : null}

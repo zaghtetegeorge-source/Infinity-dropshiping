@@ -40,7 +40,7 @@ export function ProductCard({ product, locale, currency }: { product: ProductCar
         ) : null}
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <Link href={`/${locale}/products/${product.slug}`} className="line-clamp-2 font-medium hover:text-blue-600">
+        <Link href={`/${locale}/products/${product.slug}`} className="line-clamp-2 font-medium hover:text-brand">
           {title}
         </Link>
         <div className="flex items-baseline gap-2">

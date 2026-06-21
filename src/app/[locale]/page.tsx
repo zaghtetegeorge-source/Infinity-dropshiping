@@ -86,7 +86,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
 function Feature({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
     <div className="rounded-xl border p-5 text-center">
-      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand-light text-brand">
         {icon}
       </div>
       <h3 className="font-bold">{title}</h3>
