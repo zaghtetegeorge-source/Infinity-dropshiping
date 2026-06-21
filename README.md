@@ -9,8 +9,8 @@ dashboard, and abandoned-cart recovery emails.
 
 ```bash
 npm install
-cp .env.example .env       # then fill in real values — see SETUP.md
-npx prisma migrate deploy
+cp .env.example .env       # set DATABASE_URL (Postgres) and other values — see SETUP.md
+npx prisma db push         # creates tables in your Postgres database
 npm run db:seed            # creates demo products + first admin login
 npm run dev
 ```

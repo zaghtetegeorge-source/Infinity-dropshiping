@@ -1,19 +1,18 @@
 // Prisma schema for the Infinity Dropshipping storefront.
-// SQLite by default for zero-config local dev; swap DATABASE_URL provider to
-// "postgresql" for production (see SETUP.md).
+// Postgres-backed (see SETUP.md for connecting a free Vercel Postgres/Neon
+// database). order/cart status are plain strings rather than native enums
+// so the schema stays portable across providers.
+// Valid OrderStatus values: PENDING | PAID | FULFILLED | CANCELLED | REFUNDED
+// Valid CartStatus values: ACTIVE | CHECKOUT_STARTED | RECOVERED | ABANDONED | CONVERTED
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-// SQLite has no native enum support, so order/cart status are plain strings.
-// Valid OrderStatus values: PENDING | PAID | FULFILLED | CANCELLED | REFUNDED
-// Valid CartStatus values: ACTIVE | CHECKOUT_STARTED | RECOVERED | ABANDONED | CONVERTED
 
 model Category {
   id        String    @id @default(cuid())

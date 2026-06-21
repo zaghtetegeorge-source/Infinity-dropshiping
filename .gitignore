@@ -30,12 +30,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (.env.example is the template and is intentionally tracked)
 .env*
-
-# sqlite dev database (regenerate with `npx prisma migrate deploy && npm run db:seed`)
-/prisma/*.db
-/prisma/*.db-journal
+!.env.example
 
 # vercel
 .vercel

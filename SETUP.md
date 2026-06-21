@@ -15,31 +15,38 @@ cp .env.example .env
 
 ---
 
-## 1. Database
+## 1. Database (Postgres)
 
-SQLite is the default and is fine for launch:
+The app runs on Postgres. The fastest way to get one on Vercel:
 
-```bash
-DATABASE_URL="file:./dev.db"
-```
+1. **Vercel dashboard → your project → Storage tab → Create Database** →
+   choose Postgres (Neon) → **Connect to Project**. This adds a connection
+   string env var to your project automatically.
+2. **Project Settings → Environment Variables** — confirm a variable named
+   exactly `DATABASE_URL` exists for Production (and Preview/Development if
+   you use them). If the integration named it something else (e.g.
+   `POSTGRES_PRISMA_URL`), add a `DATABASE_URL` variable with the same
+   value — `prisma/schema.prisma` reads that exact name.
+3. **Redeploy.** The build runs `prisma db push` automatically
+   (`package.json`'s `build` script), which creates all tables on first
+   deploy — no manual migration step needed.
+4. **Seed the first admin login + demo catalog** — since you likely have no
+   local access to this database, hit the one-time bootstrap endpoint once
+   instead of running a CLI script:
+   ```
+   GET https://yourdomain.com/api/admin/seed
+   Authorization: Bearer YOUR_SEED_SECRET
+   ```
+   (set `SEED_SECRET` as an env var first — see §8). It prints/returns the
+   admin email so you can log in at `/admin/login` with it and the
+   `ADMIN_SEED_PASSWORD` you configured (or the default `ChangeMe123!`).
+   **Log in and change the password immediately.** Don't call this endpoint
+   again once real products/orders exist — it wipes and recreates the demo
+   catalog every time.
 
-Then run migrations and seed the demo catalog + first admin user:
-
-```bash
-npx prisma migrate deploy
-npm run db:seed
-```
-
-`db:seed` prints the admin login it created (default
-`admin@infinitystore.com` / `ChangeMe123!` unless you set `ADMIN_SEED_EMAIL`
-/ `ADMIN_SEED_PASSWORD` first). **Log in and change the password immediately
-after launch.** The seed also re-creates demo categories/products every time
-it runs — replace them with real products from `/admin/products` before
-going live, or just edit the demo ones in place.
-
-If you outgrow SQLite, point `DATABASE_URL` at Postgres/MySQL and change the
-`provider` in `prisma/schema.prisma`'s `datasource` block, then re-run
-`npx prisma migrate deploy`.
+Local development works the same way: set `DATABASE_URL` in `.env` to the
+same (or a separate dev) Postgres connection string, then run
+`npm run db:seed` directly instead of hitting the API endpoint.
 
 ---
 
@@ -223,16 +230,18 @@ instead of a forced one; this is expected, not a bug.
 ```bash
 ADMIN_JWT_SECRET="<openssl rand -base64 48>"   # signs admin session cookies — required
 FEED_ACCESS_TOKEN="<openssl rand -hex 24>"      # appended as ?token=... to feed URLs above
+SEED_SECRET="<openssl rand -hex 24>"            # protects the one-time /api/admin/seed bootstrap (§1)
 ```
 
-Generate both with:
+Generate each with:
 
 ```bash
 openssl rand -base64 48   # ADMIN_JWT_SECRET
-openssl rand -hex 24      # FEED_ACCESS_TOKEN and CRON_SECRET
+openssl rand -hex 24      # FEED_ACCESS_TOKEN, CRON_SECRET, and SEED_SECRET
 ```
 
-Log in at `/admin/login` with the credentials `npm run db:seed` printed.
+Log in at `/admin/login` with the credentials from §1's seed step (CLI
+`npm run db:seed` output, or the `/api/admin/seed` JSON response).
 From there you can manage products (images, video, variants, pricing,
 SEO meta), view/manage orders, and see abandoned carts — no code changes
 needed to run the store day-to-day.
@@ -245,6 +254,8 @@ the feed URLs above so randoms can't scrape your catalog.
 
 ## 9. Pre-launch checklist
 
+- [ ] `DATABASE_URL` set to a real Postgres connection string in Vercel
+- [ ] Ran the one-time `/api/admin/seed` bootstrap (or `npm run db:seed`)
 - [ ] Real `NEXT_PUBLIC_SITE_URL` (production domain, HTTPS)
 - [ ] Stripe live keys + webhook configured + Apple Pay domain verified
 - [ ] Meta Pixel + CAPI token + Catalog feed registered

@@ -43,4 +43,5 @@ export const authConfig = {
   jwtSecret: process.env.ADMIN_JWT_SECRET || "dev-only-insecure-secret-change-me",
   feedSecret: process.env.FEED_ACCESS_TOKEN || "",
   cronSecret: process.env.CRON_SECRET || "",
+  seedSecret: process.env.SEED_SECRET || "",
 };
