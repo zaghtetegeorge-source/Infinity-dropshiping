@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { formatMoney } from "@/lib/currency";
+import { OrderTrackingInput } from "@/components/admin/OrderTrackingInput";
 
 function statusClass(status: string) {
   const base = "rounded-full px-2 py-1 text-xs font-medium";
@@ -22,8 +23,8 @@ export default async function AdminOrdersPage() {
   return (
     <div>
       <h1 className="mb-6 text-2xl font-bold">Orders</h1>
-      <div className="overflow-hidden rounded-xl border bg-white">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border bg-white">
+        <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-gray-50 text-left text-xs uppercase text-gray-500">
             <tr>
               <th className="px-4 py-3">Order #</th>
@@ -31,6 +32,7 @@ export default async function AdminOrdersPage() {
               <th className="px-4 py-3">Items</th>
               <th className="px-4 py-3">Total</th>
               <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3">Supplier tracking</th>
               <th className="px-4 py-3">Date</th>
             </tr>
           </thead>
@@ -47,12 +49,15 @@ export default async function AdminOrdersPage() {
                 <td className="px-4 py-3">
                   <span className={statusClass(o.status)}>{o.status}</span>
                 </td>
+                <td className="px-4 py-3">
+                  <OrderTrackingInput orderId={o.id} initialValue={o.supplierTrackingNumber ?? ""} />
+                </td>
                 <td className="px-4 py-3 text-gray-500">{o.createdAt.toLocaleDateString()}</td>
               </tr>
             ))}
             {orders.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
                   No orders yet.
                 </td>
               </tr>

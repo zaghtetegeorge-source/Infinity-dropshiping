@@ -135,6 +135,7 @@ model Order {
   total           Float
   stripeSessionId String?     @unique
   stripePaymentId String?
+  supplierTrackingNumber String?
   eventId         String      @unique @default(cuid())
   capiSentAt      DateTime?
   ttApiSentAt     DateTime?

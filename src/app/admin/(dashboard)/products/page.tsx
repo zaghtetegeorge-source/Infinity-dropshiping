@@ -10,14 +10,22 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">Products</h1>
-        <Link href="/admin/products/new" className="rounded-lg bg-black px-4 py-2 text-sm font-bold text-white">
-          + Add product
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            href="/admin/products/import"
+            className="rounded-lg border px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50"
+          >
+            Import CSV
+          </Link>
+          <Link href="/admin/products/new" className="rounded-lg bg-black px-4 py-2 text-sm font-bold text-white">
+            + Add product
+          </Link>
+        </div>
       </div>
-      <div className="overflow-hidden rounded-xl border bg-white">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border bg-white">
+        <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-gray-50 text-left text-xs uppercase text-gray-500">
             <tr>
               <th className="px-4 py-3">Title</th>
