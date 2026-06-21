@@ -6,6 +6,11 @@ import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { siteConfig } from "@/lib/siteConfig";
 
+// Stock/pricing/featured flags change from the admin dashboard at any time,
+// and the build environment has no DB connection — render per-request
+// instead of prerendering at build time.
+export const dynamic = "force-dynamic";
+
 export default async function HomePage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const dict = getDictionary(locale);

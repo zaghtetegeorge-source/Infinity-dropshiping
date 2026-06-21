@@ -3,7 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/lib/siteConfig";
 import { locales } from "@/lib/i18n/dictionaries";
 
-export const revalidate = 3600;
+// The build environment has no DB connection, and product slugs change at
+// any time from the admin dashboard — render per-request instead of
+// prerendering (and caching) at build time.
+export const dynamic = "force-dynamic";
 
 const STATIC_PATHS = [
   "",
