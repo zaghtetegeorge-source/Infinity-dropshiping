@@ -73,6 +73,7 @@ export const dictionaries = {
       shippingUae: "الشحن داخل الإمارات",
       contact: "تواصل معنا",
       rights: "جميع الحقوق محفوظة",
+      admin: "تسجيل دخول الإدارة",
     },
   },
   en: {
@@ -145,6 +146,7 @@ export const dictionaries = {
       shippingUae: "Shipping in the UAE",
       contact: "Contact Us",
       rights: "All rights reserved",
+      admin: "Admin Login",
     },
   },
 } as const;
