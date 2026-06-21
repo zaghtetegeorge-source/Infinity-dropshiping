@@ -5,7 +5,8 @@ import { seedDatabase } from "@/lib/seedDatabase";
 
 // One-time bootstrap for a freshly connected production database (no local
 // DB access needed): creates the first admin login and the demo catalog.
-// Trigger with `GET /api/admin/seed` + `Authorization: Bearer ${SEED_SECRET}`
+// Trigger with `GET /api/admin/seed` + `Authorization: Bearer ${SEED_SECRET}`,
+// or by visiting `/api/admin/seed?secret=${SEED_SECRET}` from a phone browser
 // once after connecting a database — see SETUP.md "Database". Re-running it
 // wipes and recreates the demo catalog, so don't call it again once real
 // products/orders exist.
@@ -14,7 +15,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "SEED_SECRET not configured" }, { status: 400 });
   }
   const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${authConfig.seedSecret}`) {
+  const secretParam = req.nextUrl.searchParams.get("secret");
+  const authorized =
+    authHeader === `Bearer ${authConfig.seedSecret}` || secretParam === authConfig.seedSecret;
+  if (!authorized) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
