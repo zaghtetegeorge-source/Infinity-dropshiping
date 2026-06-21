@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Cairo } from "next/font/google";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const cairo = Cairo({ variable: "--font-cairo", subsets: ["latin", "arabic"] });
 
-export const metadata: Metadata = { title: "Admin | Infinity Store" };
+export const metadata: Metadata = { title: "Admin | InGifts" };
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="en" dir="ltr" className={`${cairo.variable} h-full antialiased`}>
       <body className="min-h-full bg-gray-100 font-sans text-gray-900">{children}</body>
     </html>
   );

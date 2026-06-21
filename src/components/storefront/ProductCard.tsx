@@ -22,7 +22,7 @@ export function ProductCard({ product, locale, currency }: { product: ProductCar
   const onSale = product.compareAtPrice && product.compareAtPrice > product.price;
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-xl border bg-white transition hover:shadow-lg">
+    <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/${locale}/products/${product.slug}`} className="relative block aspect-square overflow-hidden bg-gray-100">
         {product.image ? (
           <Image
@@ -34,7 +34,7 @@ export function ProductCard({ product, locale, currency }: { product: ProductCar
           />
         ) : null}
         {onSale ? (
-          <span className="absolute top-2 start-2 rounded bg-red-600 px-2 py-1 text-xs font-bold text-white">
+          <span className="absolute top-2 start-2 rounded-full bg-red-600 px-2.5 py-1 text-xs font-bold text-white">
             SALE
           </span>
         ) : null}
@@ -60,7 +60,7 @@ export function ProductCard({ product, locale, currency }: { product: ProductCar
           image={product.image}
           priceAed={product.price}
           category={product.categoryName}
-          className="mt-auto rounded-lg bg-black px-4 py-2 text-sm font-bold text-white transition hover:bg-gray-800"
+          className="mt-auto rounded-lg bg-brand px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-dark"
         />
       </div>
     </div>

@@ -34,19 +34,24 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
     <div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
 
-      <section className="bg-gradient-to-b from-gray-900 to-gray-700 px-4 py-20 text-center text-white">
-        <h1 className="mx-auto max-w-2xl text-3xl font-extrabold sm:text-5xl">{dict.home.heroTitle}</h1>
-        <p className="mx-auto mt-4 max-w-xl text-gray-300">{dict.home.heroSubtitle}</p>
-        <Link
-          href={`/${locale}/products`}
-          className="mt-8 inline-block rounded-full bg-white px-8 py-3 font-bold text-gray-900 transition hover:bg-gray-100"
-        >
-          {dict.home.shopNow}
-        </Link>
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-dark via-brand to-brand px-4 py-24 text-center text-white">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_55%)]" />
+        <div className="relative">
+          <h1 className="mx-auto max-w-2xl text-4xl font-extrabold tracking-tight sm:text-6xl">
+            {dict.home.heroTitle}
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-white/80">{dict.home.heroSubtitle}</p>
+          <Link
+            href={`/${locale}/products`}
+            className="mt-10 inline-block rounded-full bg-white px-9 py-3.5 font-bold text-brand-dark shadow-lg shadow-black/10 transition hover:scale-105 hover:bg-white/90"
+          >
+            {dict.home.shopNow}
+          </Link>
+        </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="mb-2 text-center text-sm font-bold uppercase tracking-wide text-gray-500">
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <h2 className="mb-6 text-center text-sm font-bold uppercase tracking-widest text-gray-400">
           {dict.home.whyUs}
         </h2>
         <div className="grid gap-6 sm:grid-cols-4">
@@ -57,7 +62,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10">
+      <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="mb-6 text-2xl font-bold">{dict.home.featured}</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {products.map((p) => (
@@ -85,8 +90,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
 
 function Feature({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <div className="rounded-xl border p-5 text-center">
-      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand-light text-brand">
+    <div className="rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-light text-brand">
         {icon}
       </div>
       <h3 className="font-bold">{title}</h3>

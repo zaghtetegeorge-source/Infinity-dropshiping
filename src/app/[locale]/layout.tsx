@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Cairo } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { locales, type Locale } from "@/lib/i18n/dictionaries";
@@ -10,7 +10,7 @@ import { Footer } from "@/components/storefront/Footer";
 import { WhatsAppButton } from "@/components/storefront/WhatsAppButton";
 import { Trackers } from "@/components/tracking/Trackers";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const cairo = Cairo({ variable: "--font-cairo", subsets: ["latin", "arabic"] });
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -57,7 +57,7 @@ export default async function LocaleLayout({
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} className={`${geistSans.variable} h-full antialiased`}>
+    <html lang={locale} dir={dir} className={`${cairo.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <Trackers />
         <CartProvider>
