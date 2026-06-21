@@ -12,7 +12,13 @@ export default async function AdminProductsPage() {
     <div>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">Products</h1>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/admin/products/quick-add"
+            className="rounded-lg border px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50"
+          >
+            Add from supplier link
+          </Link>
           <Link
             href="/admin/products/import"
             className="rounded-lg border px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50"
