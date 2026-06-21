@@ -59,10 +59,6 @@ export function Footer({ locale }: { locale: Locale }) {
       </div>
       <div className="border-t py-4 text-center text-xs text-gray-500">
         © {new Date().getFullYear()} {siteConfig.name} — {dict.footer.rights}
-        {" · "}
-        <Link href="/admin/login" className="hover:text-blue-600 hover:underline">
-          {dict.footer.admin}
-        </Link>
       </div>
     </footer>
   );

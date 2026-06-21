@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, MessageCircle } from "lucide-react";
+import { ShoppingCart, MessageCircle, User } from "lucide-react";
 import type { Locale } from "@/lib/i18n/dictionaries";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { useCart } from "@/components/storefront/CartContext";
@@ -64,6 +64,15 @@ export function Header({ locale }: { locale: Locale }) {
               <MessageCircle className="h-6 w-6 text-[#25D366]" />
             </a>
           ) : null}
+
+          <Link
+            href="/admin/login"
+            className="rounded-full p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            aria-label={dict.footer.admin}
+            title={dict.footer.admin}
+          >
+            <User className="h-5 w-5" />
+          </Link>
 
           <Link href={`/${locale}/cart`} className="relative">
             <ShoppingCart className="h-6 w-6" />
