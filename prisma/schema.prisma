@@ -1,0 +1,166 @@
+// Prisma schema for the Infinity Dropshipping storefront.
+// SQLite by default for zero-config local dev; swap DATABASE_URL provider to
+// "postgresql" for production (see SETUP.md).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite has no native enum support, so order/cart status are plain strings.
+// Valid OrderStatus values: PENDING | PAID | FULFILLED | CANCELLED | REFUNDED
+// Valid CartStatus values: ACTIVE | CHECKOUT_STARTED | RECOVERED | ABANDONED | CONVERTED
+
+model Category {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  nameEn    String
+  nameAr    String
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id              String          @id @default(cuid())
+  slug            String          @unique
+  titleEn         String
+  titleAr         String
+  descriptionEn   String
+  descriptionAr   String
+  brand           String          @default("Infinity Store")
+  gtin            String?
+  mpn             String?
+  condition       String          @default("new")
+  price           Float
+  compareAtPrice  Float?
+  currency        String          @default("AED")
+  stock           Int             @default(100)
+  videoUrl        String?
+  published       Boolean         @default(true)
+  featured        Boolean         @default(false)
+  metaTitleEn     String?
+  metaTitleAr     String?
+  metaDescEn      String?
+  metaDescAr      String?
+  categoryId      String?
+  category        Category?       @relation(fields: [categoryId], references: [id])
+  images          ProductImage[]
+  variants        ProductVariant[]
+  reviews         Review[]
+  cartItems       CartItem[]
+  orderItems      OrderItem[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String   @default("")
+  position  Int      @default(0)
+}
+
+model ProductVariant {
+  id          String      @id @default(cuid())
+  productId   String
+  product     Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  nameEn      String
+  nameAr      String
+  sku         String      @unique
+  priceDelta  Float       @default(0)
+  stock       Int         @default(100)
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  authorName  String
+  rating      Int
+  titleText   String?
+  bodyText    String
+  approved    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Cart {
+  id           String      @id @default(cuid())
+  sessionId    String      @unique
+  email        String?
+  phone        String?
+  status       String      @default("ACTIVE")
+  currency     String      @default("AED")
+  recoveryUrl  String?
+  remindersSent Int        @default(0)
+  lastEmailAt  DateTime?
+  items        CartItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model CartItem {
+  id         String          @id @default(cuid())
+  cartId     String
+  cart       Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product         @relation(fields: [productId], references: [id])
+  variantId  String?
+  variant    ProductVariant? @relation(fields: [variantId], references: [id])
+  quantity   Int             @default(1)
+  unitPrice  Float
+  createdAt  DateTime        @default(now())
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  email           String
+  phone           String?
+  fullName        String
+  country         String      @default("AE")
+  city            String?
+  address         String?
+  status          String      @default("PENDING")
+  cartSessionId   String?
+  currency        String      @default("AED")
+  subtotal        Float
+  shippingFee     Float       @default(0)
+  total           Float
+  stripeSessionId String?     @unique
+  stripePaymentId String?
+  eventId         String      @unique @default(cuid())
+  capiSentAt      DateTime?
+  ttApiSentAt     DateTime?
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id         String          @id @default(cuid())
+  orderId    String
+  order      Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product         @relation(fields: [productId], references: [id])
+  variantId  String?
+  variant    ProductVariant? @relation(fields: [variantId], references: [id])
+  titleSnap  String
+  quantity   Int
+  unitPrice  Float
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
